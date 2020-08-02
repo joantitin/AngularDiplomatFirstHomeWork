@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-login',
@@ -10,7 +11,7 @@ export class LoginComponent implements OnInit {
 
   formGroup: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private authenticationService: AngularFireAuth) { }
 
   ngOnInit(): void {
     this.formGroup = this.formBuilder.group({
@@ -45,6 +46,27 @@ export class LoginComponent implements OnInit {
 
     if (pattern) {
       return 'Su contraseña debe contener al menos una letra minuscula , una letra mayuscula y un caracter especial';
+    }
+  }
+
+  async logIn() {
+    try {
+      const email = this.formGroup.get('email').value;
+      const password = this.formGroup.get('password').value;
+      this.authenticationService.signOut();
+      const user = await this.authenticationService.signInWithEmailAndPassword(email, password);
+      if (user) {
+        console.log('logeado');
+      }
+    } catch (error) {
+      const message = error;
+
+      if (message) {
+        console.log('Correo electronico o Password incorrecto');
+      }
+      else {
+        console.log('ocurrio un error');
+      }
     }
   }
 }
