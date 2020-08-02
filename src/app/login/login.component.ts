@@ -53,19 +53,21 @@ export class LoginComponent implements OnInit {
     try {
       const email = this.formGroup.get('email').value;
       const password = this.formGroup.get('password').value;
-      this.authenticationService.signOut();
+
       const user = await this.authenticationService.signInWithEmailAndPassword(email, password);
+
       if (user) {
         console.log('logeado');
       }
-    } catch (error) {
-      const message = error;
+    }
+    catch (error) {
+      const { message } = error;
 
       if (message) {
         console.log('Correo electronico o Password incorrecto');
       }
       else {
-        console.log('ocurrio un error');
+        console.log('Ha ocurrido un error inesperado');
       }
     }
   }
