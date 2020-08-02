@@ -25,11 +25,11 @@ export class LoginComponent implements OnInit {
     const { required, email } = this.formGroup.get('email').errors;
 
     if (required) {
-      return 'El correo electronico es requerido';
+      return 'El correo electrónico es requerido';
     }
 
     if (email) {
-      return 'Digite un correo electronico valido';
+      return 'Ingrese un correo electrónico valido';
     }
   }
 
@@ -41,11 +41,11 @@ export class LoginComponent implements OnInit {
     }
 
     if (minlength) {
-      return 'Su contraseña debe tener minimo 8 caracteres';
+      return 'Su contraseña debe tener mínimo 8 caracteres';
     }
 
     if (pattern) {
-      return 'Su contraseña debe contener al menos una letra minuscula , una letra mayuscula y un caracter especial';
+      return 'Su contraseña debe contener al menos una letra minúscula , una letra mayúscula y un carácter especial';
     }
   }
 
