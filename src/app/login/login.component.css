@@ -1,0 +1,8 @@
+.form {
+  min-width: 23%;
+}
+
+.bg-img {
+  background-image: url("../../assets/images/fondo.jpg");
+  background-size: 100% 100%;
+}
