@@ -9,6 +9,14 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-.text-color {
+.text-primary-color {
   color: #3f51b5;
+}
+
+.bg-primary-color {
+  background-color: #3f51b5;
+}
+
+.ripple {
+  cursor: pointer;
 }

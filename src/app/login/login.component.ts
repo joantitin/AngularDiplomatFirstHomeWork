@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +12,10 @@ export class LoginComponent implements OnInit {
 
   formGroup: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private authenticationService: AngularFireAuth) { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private authenticationService: AngularFireAuth,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.formGroup = this.formBuilder.group({
@@ -57,7 +61,8 @@ export class LoginComponent implements OnInit {
       const user = await this.authenticationService.signInWithEmailAndPassword(email, password);
 
       if (user) {
-        console.log('logeado');
+        localStorage.setItem('user', JSON.stringify(user));
+        this.router.navigate(['/home']);
       }
     }
     catch (error) {
