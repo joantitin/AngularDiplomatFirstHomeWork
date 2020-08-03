@@ -21,3 +21,8 @@ body {
 .ripple {
   cursor: pointer;
 }
+
+*:focus {
+  outline: none !important;
+  border: 0 !important;
+}
