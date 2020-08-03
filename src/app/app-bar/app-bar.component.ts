@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { MatDialog } from '@angular/material/dialog';
+import { LogoutDialogComponent } from '../Dialogs/logout-dialog/logout-dialog.component';
 
 @Component({
   selector: 'app-app-bar',
@@ -8,13 +10,15 @@ import { AngularFireAuth } from '@angular/fire/auth';
 })
 export class AppBarComponent implements OnInit {
 
-  constructor(private authenticationService: AngularFireAuth) { }
+  constructor(private dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
 
-  async logout() {
-    await this.authenticationService.signOut();
+  openDialog() {
+    this.dialog.open(LogoutDialogComponent, {
+      disableClose: true
+    });
   }
 
 }
