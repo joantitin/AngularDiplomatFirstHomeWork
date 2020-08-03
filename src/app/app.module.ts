@@ -21,6 +21,7 @@ import { AppBarComponent } from './app-bar/app-bar.component';
 import { MatRippleModule } from '@angular/material/core';
 import { AuthGuard } from './Guards/auth-guard';
 import { LoginGuard } from './Guards/login-guard';
+import { ToastrModule } from 'ngx-toastr';
 
 
 
@@ -44,7 +45,8 @@ import { LoginGuard } from './Guards/login-guard';
     MatToolbarModule,
     MatIconModule,
     MatCardModule,
-    MatRippleModule
+    MatRippleModule,
+    ToastrModule.forRoot()
   ],
   providers: [AuthGuard, LoginGuard],
   bootstrap: [AppComponent]

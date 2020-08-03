@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private authenticationService: AngularFireAuth,
-    private router: Router) { }
+    private router: Router,
+    private toastService: ToastrService) { }
 
   ngOnInit(): void {
     this.formGroup = this.formBuilder.group({
@@ -69,6 +71,7 @@ export class LoginComponent implements OnInit {
       const { message } = error;
 
       if (message) {
+        this.toastService.error('Correo electronico o Password incorrecto', 'Ha ocurrido un error inesperado');
         console.log('Correo electronico o Password incorrecto');
       }
       else {
