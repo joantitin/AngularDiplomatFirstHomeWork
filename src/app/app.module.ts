@@ -13,13 +13,24 @@ import { SigninComponent } from './signin/signin.component';
 import { AngularFireModule } from '@angular/fire';
 import { environment } from '../environments/environment';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { HomeComponent } from './home/home.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
+import { AppBarComponent } from './app-bar/app-bar.component';
+import { MatRippleModule } from '@angular/material/core';
+import { AuthGuard } from './Guards/auth-guard';
+import { LoginGuard } from './Guards/login-guard';
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    SigninComponent
+    SigninComponent,
+    HomeComponent,
+    AppBarComponent
   ],
   imports: [
     BrowserModule,
@@ -29,9 +40,13 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
     MatInputModule,
     MatButtonModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatCardModule,
+    MatRippleModule
   ],
-  providers: [],
+  providers: [AuthGuard, LoginGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
