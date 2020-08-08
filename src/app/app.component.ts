@@ -16,12 +16,12 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.authenticationService.authState.subscribe(user => {
       if (!user) {
-        localStorage.removeItem('user');
         this.isLogin = false;
         this.router.navigate(['/']);
       }
       else {
         this.isLogin = true;
+        this.router.navigate(['/home']);
       }
     });
   }

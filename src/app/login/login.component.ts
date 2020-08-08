@@ -3,6 +3,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { MatDialog } from '@angular/material/dialog';
+import { ChangePasswordDialogComponent } from '../Dialogs/change-password-dialog/change-password-dialog.component';
 
 @Component({
   selector: 'app-login',
@@ -17,13 +19,22 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private authenticationService: AngularFireAuth,
     private router: Router,
-    private toastService: ToastrService) { }
+    private toastService: ToastrService,
+    private dialog: MatDialog
+  ) { }
 
   ngOnInit(): void {
     this.formGroup = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(8),
-      Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')]]
+      password: ['', Validators.required]
+    });
+
+    this.authenticationService.authState.toPromise().then(user => {
+      if (user) {
+        this.router.navigate(['/home']);
+      }
+    }).catch(() => {
+      this.toastService.error('No se pudo conectar con firebase', 'Ha ocurrido un error inespoerado');
     });
   }
 
@@ -40,19 +51,12 @@ export class LoginComponent implements OnInit {
   }
 
   getPasswordError(): string {
-    const { required, minlength, pattern } = this.formGroup.get('password').errors;
+    const { required } = this.formGroup.get('password').errors;
 
     if (required) {
       return 'La contraseña es requerida';
     }
 
-    if (minlength) {
-      return 'Su contraseña debe tener mínimo 8 caracteres';
-    }
-
-    if (pattern) {
-      return 'Su contraseña debe contener al menos una letra minúscula , una letra mayúscula y un carácter especial';
-    }
   }
 
   async logIn() {
@@ -60,13 +64,9 @@ export class LoginComponent implements OnInit {
       const email = this.formGroup.get('email').value;
       const password = this.formGroup.get('password').value;
 
-      const user = await this.authenticationService.signInWithEmailAndPassword(email, password);
-
-      if (user) {
-        localStorage.setItem('user', JSON.stringify(user));
-        this.router.navigate(['/home']);
-      }
+      const { user } = await this.authenticationService.signInWithEmailAndPassword(email, password);
     }
+
     catch (error) {
       const { message } = error;
 
@@ -78,5 +78,11 @@ export class LoginComponent implements OnInit {
         console.log('Ha ocurrido un error inesperado');
       }
     }
+  }
+
+  openRecoveryPasswordDialog() {
+    this.dialog.open(ChangePasswordDialogComponent, {
+      disableClose: true
+    });
   }
 }

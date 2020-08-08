@@ -5,11 +5,10 @@ import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
 import appRoutes from './app.routing';
 import { LoginComponent } from './login/login.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { SigninComponent } from './signin/signin.component';
 import { AngularFireModule } from '@angular/fire';
 import { environment } from '../environments/environment';
 import { AngularFireAuthModule } from '@angular/fire/auth';
@@ -19,12 +18,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { AppBarComponent } from './app-bar/app-bar.component';
 import { MatRippleModule } from '@angular/material/core';
-import { AuthGuard } from './Guards/auth-guard';
-import { LoginGuard } from './Guards/login-guard';
 import { ToastrModule } from 'ngx-toastr';
 import { MatDialogModule } from '@angular/material/dialog';
 import { LogoutDialogComponent } from './Dialogs/logout-dialog/logout-dialog.component';
-
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { SignupComponent } from './signup/signup.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { ChangePasswordDialogComponent } from './Dialogs/change-password-dialog/change-password-dialog.component';
 
 
 
@@ -32,10 +32,11 @@ import { LogoutDialogComponent } from './Dialogs/logout-dialog/logout-dialog.com
   declarations: [
     AppComponent,
     LoginComponent,
-    SigninComponent,
     HomeComponent,
     AppBarComponent,
-    LogoutDialogComponent
+    LogoutDialogComponent,
+    SignupComponent,
+    ChangePasswordDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,9 +52,12 @@ import { LogoutDialogComponent } from './Dialogs/logout-dialog/logout-dialog.com
     MatCardModule,
     MatRippleModule,
     ToastrModule.forRoot(),
-    MatDialogModule
+    MatDialogModule,
+    AngularFireDatabaseModule,
+    NgxSpinnerModule,
+    FormsModule
   ],
-  providers: [AuthGuard, LoginGuard],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
