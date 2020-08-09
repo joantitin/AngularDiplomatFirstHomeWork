@@ -170,13 +170,7 @@ export class SignupComponent implements OnInit {
   }
 
   private buildUser(): UserModel {
-    const name = this.formGroup.get('name').value;
-    const lastname = this.formGroup.get('lastname').value;
-    const email = this.formGroup.get('email').value;
-    const identificationNumber = this.formGroup.get('identificationNumber').value;
-    const phone = this.formGroup.get('phone').value;
-    const address = this.formGroup.get('address').value;
-    const password = this.formGroup.get('password').value;
+    const { name, lastname, email, identificationNumber, phone, address, password } = this.formGroup.value;
 
     const user: UserModel = {
       name, lastname, email, identificationNumber, phone, address, password,
