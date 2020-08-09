@@ -157,7 +157,8 @@ export class SignupComponent implements OnInit {
     try {
       this.spinner.show();
       const userToCreate = this.buildUser();
-      const { user } = await this.authenticationService.createUserWithEmailAndPassword(userToCreate.email, userToCreate.password);
+      const { password } = this.formGroup.value;
+      const { user } = await this.authenticationService.createUserWithEmailAndPassword(userToCreate.email, password);
       await this.angularFirestoreService.collection('users').doc(user.uid).set(userToCreate);
       this.router.navigate(['/home']);
       this.spinner.hide();
@@ -170,10 +171,10 @@ export class SignupComponent implements OnInit {
   }
 
   private buildUser(): UserModel {
-    const { name, lastname, email, identificationNumber, phone, address, password } = this.formGroup.value;
+    const { name, lastname, email, identificationNumber, phone, address } = this.formGroup.value;
 
     const user: UserModel = {
-      name, lastname, email, identificationNumber, phone, address, password,
+      name, lastname, email, identificationNumber, phone, address
     };
 
     return user;
