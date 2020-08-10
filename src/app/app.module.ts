@@ -25,6 +25,9 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { SignupComponent } from './signup/signup.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { ChangePasswordDialogComponent } from './Dialogs/change-password-dialog/change-password-dialog.component';
+import { MatSelectModule } from '@angular/material/select';
+import { HttpClientModule } from '@angular/common/http';
+
 
 
 
@@ -55,7 +58,9 @@ import { ChangePasswordDialogComponent } from './Dialogs/change-password-dialog/
     MatDialogModule,
     AngularFireDatabaseModule,
     NgxSpinnerModule,
-    FormsModule
+    FormsModule,
+    MatSelectModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

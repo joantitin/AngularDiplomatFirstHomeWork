@@ -21,7 +21,6 @@ export class AppComponent implements OnInit {
       }
       else {
         this.isLogin = true;
-        this.router.navigate(['/home']);
       }
     });
   }

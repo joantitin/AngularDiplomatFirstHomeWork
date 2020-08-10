@@ -6,6 +6,9 @@ import { UserModel } from '../Models/user-model';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Municipality } from '../Models/municipality-model';
+import { MunicipityService } from '../Services/municipity.service';
+import { UserService } from '../Services/user.service';
 
 @Component({
   selector: 'app-signup',
@@ -15,6 +18,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class SignupComponent implements OnInit {
 
   formGroup: FormGroup;
+  municipalities: Array<Municipality>;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -22,7 +26,9 @@ export class SignupComponent implements OnInit {
     private authenticationService: AngularFireAuth,
     private toastService: ToastrService,
     private router: Router,
-    private spinner: NgxSpinnerService) { }
+    private spinner: NgxSpinnerService,
+    private municipityService: MunicipityService,
+    private userService: UserService) { }
 
   ngOnInit(): void {
     this.formGroup = this.formBuilder.group({
@@ -30,13 +36,23 @@ export class SignupComponent implements OnInit {
       lastname: ['', [Validators.required, Validators.maxLength(20)]],
       identificationNumber: ['', [Validators.required, Validators.maxLength(11)]],
       email: ['', [Validators.required, Validators.email, Validators.maxLength(50)]],
-      phone: ['', [Validators.required, Validators.maxLength(10)]],
+      phoneNumber: ['', [Validators.required, Validators.maxLength(10)]],
       address: ['', [Validators.required, Validators.maxLength(80)]],
+      sector: ['', [Validators.required, Validators.maxLength(30)]],
+      municipity: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(8),
       Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')]],
       repeatPassword: ''
     },
       { validators: this.validateRepeatPassword('password', 'repeatPassword') });
+
+    this.municipityService.getAllMunicipities().then(municipities => {
+      this.municipalities = municipities;
+    }).catch(error => {
+      console.log(error);
+
+      this.toastService.error(error.error, 'Ha ocurrido un error inesperado')
+    });
 
     this.authenticationService.authState.toPromise().then(user => {
       if (user) {
@@ -60,7 +76,7 @@ export class SignupComponent implements OnInit {
   }
 
   getLastnameErrorMessage(): string {
-    const { required, maxlength, email } = this.formGroup.get('lastname').errors;
+    const { required, maxlength } = this.formGroup.get('lastname').errors;
 
     if (required) {
       return 'El apellido es requerido';
@@ -100,7 +116,7 @@ export class SignupComponent implements OnInit {
   }
 
   getPhoneErrorMessage(): string {
-    const { required, maxlength } = this.formGroup.get('phone').errors;
+    const { required, maxlength } = this.formGroup.get('phoneNumber').errors;
 
     if (required) {
       return 'El telefono es requerido';
@@ -156,10 +172,13 @@ export class SignupComponent implements OnInit {
   async createUser() {
     try {
       this.spinner.show();
-      const userToCreate = this.buildUser();
-      const { password } = this.formGroup.value;
-      const { user } = await this.authenticationService.createUserWithEmailAndPassword(userToCreate.email, password);
-      await this.angularFirestoreService.collection('users').doc(user.uid).set(userToCreate);
+
+      const { email, password } = this.formGroup.value;
+
+      const { user } = await this.authenticationService.createUserWithEmailAndPassword(email, password);
+      const userToCreate = this.buildUser(user.uid);
+      await this.userService.registerUser(userToCreate);
+
       this.router.navigate(['/home']);
       this.spinner.hide();
     }
@@ -170,11 +189,15 @@ export class SignupComponent implements OnInit {
 
   }
 
-  private buildUser(): UserModel {
-    const { name, lastname, email, identificationNumber, phone, address } = this.formGroup.value;
+
+
+
+  private buildUser(id: string): UserModel {
+    const { name, lastname, email, identificationNumber, phoneNumber, address, sector, municipity } = this.formGroup.value;
 
     const user: UserModel = {
-      name, lastname, email, identificationNumber, phone, address
+      userId: id, name, lastname, email, identificationNumber, phoneNumber, address,
+      sector, municipalityId: municipity
     };
 
     return user;
