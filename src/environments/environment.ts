@@ -15,7 +15,7 @@ export const environment = {
     measurementId: 'G-520D72X2Z9'
   },
   api: {
-    baseUrl: 'https://localhost:44354/api'
+    baseUrl: 'https://firsthomework.azurewebsites.net/api'
   }
 };
 

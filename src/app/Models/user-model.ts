@@ -1,3 +1,5 @@
+import { Municipality } from './municipality-model';
+
 export interface UserModel {
   userId: string;
   name: string;
@@ -8,4 +10,5 @@ export interface UserModel {
   address: string;
   sector: string;
   municipalityId: number;
+  municipality?: Municipality;
 }

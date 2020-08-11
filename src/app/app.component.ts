@@ -20,6 +20,7 @@ export class AppComponent implements OnInit {
         this.router.navigate(['/']);
       }
       else {
+        this.router.navigate(['/home']);
         this.isLogin = true;
       }
     });

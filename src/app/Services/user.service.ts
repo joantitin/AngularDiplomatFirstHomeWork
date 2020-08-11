@@ -13,7 +13,23 @@ export class UserService {
 
   constructor(private httpClient: HttpClient) { }
 
-  registerUser(user: UserModel) {
+  getAll() {
+    return this.httpClient.get<Array<UserModel>>(`${this.baseUrl}/user`).toPromise();
+  }
+
+  get(userId: string) {
+    return this.httpClient.get<UserModel>(`${this.baseUrl}/user/${userId}`).toPromise();
+  }
+
+  create(user: UserModel) {
     return this.httpClient.post(`${this.baseUrl}/user`, user).toPromise();
+  }
+
+  update(user: UserModel) {
+    return this.httpClient.put(`${this.baseUrl}/user`, user).toPromise();
+  }
+
+  delete(userId: string) {
+    return this.httpClient.delete(`${this.baseUrl}/user/${userId}`).toPromise();
   }
 }

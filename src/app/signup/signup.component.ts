@@ -46,12 +46,14 @@ export class SignupComponent implements OnInit {
     },
       { validators: this.validateRepeatPassword('password', 'repeatPassword') });
 
+    this.spinner.show();
+
     this.municipityService.getAllMunicipities().then(municipities => {
       this.municipalities = municipities;
-    }).catch(error => {
-      console.log(error);
-
-      this.toastService.error(error.error, 'Ha ocurrido un error inesperado')
+      this.spinner.hide();
+    }).catch(() => {
+      this.spinner.hide();
+      this.toastService.error('No se pudieron cargar los municipios', 'Ha ocurrido un error inesperado');
     });
 
     this.authenticationService.authState.toPromise().then(user => {
@@ -177,7 +179,7 @@ export class SignupComponent implements OnInit {
 
       const { user } = await this.authenticationService.createUserWithEmailAndPassword(email, password);
       const userToCreate = this.buildUser(user.uid);
-      await this.userService.registerUser(userToCreate);
+      await this.userService.create(userToCreate);
 
       this.router.navigate(['/home']);
       this.spinner.hide();

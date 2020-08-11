@@ -3,6 +3,7 @@ import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { SignupComponent } from './signup/signup.component';
 import { AngularFireAuthGuard } from '@angular/fire/auth-guard';
+import { UsersComponent } from './users/users.component';
 
 const appRoutes: Routes = [
   {
@@ -16,6 +17,10 @@ const appRoutes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
+    canActivate: [AngularFireAuthGuard]
+  },
+  {
+    path: 'users', component: UsersComponent,
     canActivate: [AngularFireAuthGuard]
   }
 ];

@@ -27,8 +27,11 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { ChangePasswordDialogComponent } from './Dialogs/change-password-dialog/change-password-dialog.component';
 import { MatSelectModule } from '@angular/material/select';
 import { HttpClientModule } from '@angular/common/http';
-
-
+import { MatTableModule } from '@angular/material/table';
+import { UsersComponent } from './users/users.component';
+import { MatSortModule } from '@angular/material/sort';
+import { DeleteUserDialogComponent } from './Dialogs/delete-user-dialog/delete-user-dialog.component';
+import { UpdateUserDialogComponent } from './Dialogs/update-user-dialog/update-user-dialog.component';
 
 
 @NgModule({
@@ -40,6 +43,9 @@ import { HttpClientModule } from '@angular/common/http';
     LogoutDialogComponent,
     SignupComponent,
     ChangePasswordDialogComponent,
+    UsersComponent,
+    DeleteUserDialogComponent,
+    UpdateUserDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -60,7 +66,9 @@ import { HttpClientModule } from '@angular/common/http';
     NgxSpinnerModule,
     FormsModule,
     MatSelectModule,
-    HttpClientModule
+    HttpClientModule,
+    MatTableModule,
+    MatSortModule
   ],
   providers: [],
   bootstrap: [AppComponent]
