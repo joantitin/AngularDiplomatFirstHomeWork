@@ -32,4 +32,9 @@ export class UserService {
   delete(userId: string) {
     return this.httpClient.delete(`${this.baseUrl}/user/${userId}`).toPromise();
   }
+
+  validateUserExistence(email: string) {
+    return this.httpClient.get<boolean>(`${this.baseUrl}/user/validate-user-existence/${email}`).toPromise();
+
+  }
 }

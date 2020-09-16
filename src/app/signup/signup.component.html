@@ -36,7 +36,8 @@
       <div class="col-6">
         <mat-form-field class="col-12">
           <mat-label>Cedula</mat-label>
-          <input maxlength="11" matInput formControlName="identificationNumber" placeholder="Ex. 402-0052365-9">
+          <input maxlength="11" (keypress)="onlyNumbers($event)" matInput formControlName="identificationNumber"
+            placeholder="Ex. 40200523659">
           <mat-error *ngIf="formGroup.get('identificationNumber').invalid">
             {{getIdentificationNumberErrorMessage()}}
           </mat-error>
@@ -58,7 +59,8 @@
       <div class="col-6">
         <mat-form-field class="col-12">
           <mat-label>Telefono</mat-label>
-          <input maxlength="10" matInput formControlName="phoneNumber" placeholder="Ex. 8095642584">
+          <input maxlength="10" (keypress)="onlyNumbers($event)" matInput formControlName="phoneNumber"
+            placeholder="Ex. 8095642584">
           <mat-error *ngIf="formGroup.get('phoneNumber').invalid">
             {{getPhoneErrorMessage()}}
           </mat-error>

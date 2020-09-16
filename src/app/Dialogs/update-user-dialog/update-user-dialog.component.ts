@@ -34,11 +34,11 @@ export class UpdateUserDialogComponent implements OnInit {
       name: [this.user.name, [Validators.required, Validators.maxLength(20)]],
       lastname: [this.user.lastname, [Validators.required, Validators.maxLength(20)]],
       identificationNumber: [this.user.identificationNumber, [Validators.required, Validators.maxLength(11)]],
-      email: [this.user.email, [Validators.required, Validators.email, Validators.maxLength(50)]],
+      email: [{ value: this.user.email, disabled: true }, [Validators.required, Validators.email, Validators.maxLength(50)]],
       phoneNumber: [this.user.phoneNumber, [Validators.required, Validators.maxLength(10)]],
       address: [this.user.address, [Validators.required, Validators.maxLength(80)]],
       sector: [this.user.sector, [Validators.required, Validators.maxLength(30)]],
-      municipity: [this.user.municipalityId, Validators.required],
+      municipity: [this.user.municipality.municipalityId, Validators.required],
     });
 
     this.municipityService.getAllMunicipities().then(municipities => {

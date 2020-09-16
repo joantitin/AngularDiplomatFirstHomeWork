@@ -186,9 +186,17 @@ export class SignupComponent implements OnInit {
     }
     catch (error) {
       this.spinner.hide();
-      this.toastService.error(error, 'Ha ocurrido un error inesperado');
+      this.toastService.error('Este usuario no se puede registrar en el sistema porque fue eliminado',
+        'Ha ocurrido un error inesperado');
     }
+  }
 
+  onlyNumbers(event) {
+    if (event.which >= 48 && event.which <= 57) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
 

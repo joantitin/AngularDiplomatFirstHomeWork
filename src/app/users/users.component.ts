@@ -7,6 +7,7 @@ import { DeleteUserDialogComponent } from '../Dialogs/delete-user-dialog/delete-
 import { UpdateUserDialogComponent } from '../Dialogs/update-user-dialog/update-user-dialog.component';
 import { UserService } from '../Services/user.service';
 import { ToastrService } from 'ngx-toastr';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-users',
@@ -18,14 +19,17 @@ export class UsersComponent implements OnInit {
   dataSource: MatTableDataSource<UserModel>;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(public dialog: MatDialog, private userService: UserService, private toastService: ToastrService) { }
+  constructor(public dialog: MatDialog, private userService: UserService, private toastService: ToastrService,
+    private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
-
+    this.spinner.show();
     this.userService.getAll().then(users => {
       this.dataSource = new MatTableDataSource(users);
       this.dataSource.sort = this.sort;
+      this.spinner.hide();
     }).catch(() => {
+      this.spinner.hide();
       this.toastService.error('No se pudo consultar la base de datos', 'Ha ocurrido un error inesperado');
     });
   }

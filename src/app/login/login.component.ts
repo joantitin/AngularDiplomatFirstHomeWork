@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { MatDialog } from '@angular/material/dialog';
 import { ChangePasswordDialogComponent } from '../Dialogs/change-password-dialog/change-password-dialog.component';
+import { UserService } from '../Services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,8 @@ export class LoginComponent implements OnInit {
     private authenticationService: AngularFireAuth,
     private router: Router,
     private toastService: ToastrService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private userService: UserService
   ) { }
 
   ngOnInit(): void {
@@ -64,7 +66,14 @@ export class LoginComponent implements OnInit {
       const email = this.formGroup.get('email').value;
       const password = this.formGroup.get('password').value;
 
-      await this.authenticationService.signInWithEmailAndPassword(email, password);
+      const isUserExist = await this.userService.validateUserExistence(email);
+
+      if (isUserExist) {
+        await this.authenticationService.signInWithEmailAndPassword(email, password);
+      }
+      else {
+        this.toastService.error('Este usuario no esta registrado en el sistema', 'Ha ocurrido un error inesperado');
+      }
     }
 
     catch (error) {
