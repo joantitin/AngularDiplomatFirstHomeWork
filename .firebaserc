@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "angulartest-1e929": {
+      "hosting": {
+        "FirstHomeWork": [
+          "angulartest-1e929"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "angulartest-1e929"
+  }
+}

@@ -1,0 +1,136 @@
+<div class="container-fluid min-vh-100 d-flex justify-content-center align-items-center bg-img">
+  <form [formGroup]="formGroup" class="border rounded form bg-white">
+
+    <div class="row mt-3">
+
+    </div>
+    <div class="row">
+      <div class="col-12 mt-3 text-center">
+        <h1 class="text-primary-color">Registro de usuario</h1>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-6">
+        <mat-form-field class="col-12">
+          <mat-label>Nombre</mat-label>
+          <input maxlength="20" matInput formControlName="name" placeholder="Ex. Pedro Sosa">
+          <mat-error *ngIf="formGroup.get('name').invalid">
+            {{getNameErrorMessage()}}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col-6">
+        <mat-form-field class="col-12">
+          <mat-label>Apellido</mat-label>
+          <input maxlength="20" matInput formControlName="lastname">
+          <mat-error *ngIf="formGroup.get('lastname').invalid">
+            {{getLastnameErrorMessage()}}
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row mt-3">
+      <div class="col-6">
+        <mat-form-field class="col-12">
+          <mat-label>Cedula</mat-label>
+          <input maxlength="11" (keypress)="onlyNumbers($event)" matInput formControlName="identificationNumber"
+            placeholder="Ex. 40200523659">
+          <mat-error *ngIf="formGroup.get('identificationNumber').invalid">
+            {{getIdentificationNumberErrorMessage()}}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col-6">
+        <mat-form-field class="col-12">
+          <mat-label>Correo Electronico</mat-label>
+          <input maxlength="50" matInput formControlName="email">
+          <mat-error *ngIf="formGroup.get('email').invalid">
+            {{getEmailErrorMessage()}}
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row mt-3">
+      <div class="col-6">
+        <mat-form-field class="col-12">
+          <mat-label>Telefono</mat-label>
+          <input maxlength="10" (keypress)="onlyNumbers($event)" matInput formControlName="phoneNumber"
+            placeholder="Ex. 8095642584">
+          <mat-error *ngIf="formGroup.get('phoneNumber').invalid">
+            {{getPhoneErrorMessage()}}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col-6">
+        <mat-form-field class="col-12">
+          <mat-label>Direccion</mat-label>
+          <input maxlength="80" matInput formControlName="address">
+          <mat-error *ngIf="formGroup.get('address').invalid">
+            {{getAddressErrorMessage()}}
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row mt-3">
+      <div class="col-6">
+        <mat-form-field class="col-12">
+          <mat-label>Sector</mat-label>
+          <input maxlength="30" matInput formControlName="sector" placeholder="Ex. Villa Mella">
+          <mat-error *ngIf="formGroup.get('sector').invalid">
+
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-6">
+        <mat-form-field class="col-12">
+          <mat-label>Municipio</mat-label>
+          <mat-select formControlName="municipity">
+
+            <mat-option *ngFor="let municipity of municipalities" [value]="municipity.municipalityId">
+              {{municipity.description}}</mat-option>
+          </mat-select>
+
+          <mat-error *ngIf="formGroup.get('municipity').invalid">
+            Seleccione un municipio
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row mt-3">
+      <div class="col-6">
+        <mat-form-field class="col-12">
+          <mat-label>Contraseña</mat-label>
+          <input type="password" maxlength="20" matInput formControlName="password" placeholder="Ex. 402-0052365-9">
+          <mat-error *ngIf="formGroup.get('password').invalid">
+            {{getPasswordErrorMessage()}}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col-6">
+        <mat-form-field class="col-12">
+          <mat-label>Confirmar contraseña</mat-label>
+          <input type="password" maxlength="20" matInput formControlName="repeatPassword">
+          <mat-error *ngIf="formGroup.get('repeatPassword').invalid">
+            Las contraseñas no coinciden
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row mt-3 mb-4">
+      <div class="col-12 d-flex justify-content-center pr-4 pl-4">
+        <button class="col-12" mat-raised-button color="primary" [disabled]="formGroup.invalid"
+          (click)="createUser()">Ingresar</button>
+      </div>
+    </div>
+  </form>
+</div>
